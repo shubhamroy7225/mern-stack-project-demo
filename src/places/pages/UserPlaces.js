@@ -16,7 +16,7 @@ const dummyPlaceData=[
     },
     {
         id:'p2',
-        title:'Empire state building',
+        title:'Empire.building',
         description:'One of most famus sky scrapers in the world',
         imageUrl:'https://homepages.cae.wisc.edu/~ece533/images/zelda.png',
         address:'20 W 34th St, New York, NY 10001',
