@@ -3,25 +3,22 @@ import Input from '../../shared/components/FormElements/Input'
 import Button from '../../shared/components/FormElements/Button/Button'
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL
 } from '../../shared/components/util/validators';
-import './FormPlace.css';
+import '../../places/pages/FormPlace.css';
 import { useForm } from '../../shared/components/hooks/form-hook';
 
 
 
-const NewPlace = () => {
+const Signin = () => {
  
 const [formState,inputHandler]=useForm({
-  title: {
+ email: {
     value: '',
     isValid: false
   },
-  description: {
-    value: '',
-    isValid: false
-  },
-  address: {
+  password: {
     value: '',
     isValid: false
   }
@@ -34,36 +31,29 @@ const [formState,inputHandler]=useForm({
   return (
     <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
-        id="title"
+        id="email"
         element="input"
-        type="text"
-        label="Title"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
+        type="email"
+        label="Email"
+        validators={[VALIDATOR_EMAIL()]}
+        errorText="Please enter a valid email."
         onInput={inputHandler}
       />
       <Input
-        id="description"
-        element="textarea"
-        label="Description"
+        id="password"
+        element="input"
+        type='text'
+        label="Password"
         validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description (at least 5 characters)."
+        errorText="Please enter a valid password (at least 5 characters)."
         onInput={inputHandler}
       />
-      <Input
-        id="address"
-        element="input"
-        type="text"
-        label="Address"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid address."
-        onInput={inputHandler}
-      />
+     
       <Button type="submit" disabled={!formState.isValid}>
-        ADD PLACE
+        LOGIN
       </Button>
     </form>
   );
 };
 
-export default NewPlace;
+export default Signin;

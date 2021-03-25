@@ -7,7 +7,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/components/util/validators";
-import { useForm } from "../../shared/components/hookS/form-hook";
+import { useForm } from "../../shared/components/hooks/form-hook";
 import Card from "../../shared/components/UIElements/Card/Card";
 const data = [
   {
