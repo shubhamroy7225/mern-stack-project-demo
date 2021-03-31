@@ -1,37 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useHttpClient } from '../../shared/components/hooks/http-hook';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
 import PlaceList from "../components/PlaceList"
-const dummyPlaceData=[
-    {
-        id:'p1',
-        title:'Empire state building',
-        description:'One of most famus sky scrapers in the world',
-        imageUrl:'https://homepages.cae.wisc.edu/~ece533/images/zelda.png',
-        address:'20 W 34th St, New York, NY 10001',
-        location:{
-            lat:40.7484405,
-            lng:-73.9878584
-        },
-        creator:'u1'
-    },
-    {
-        id:'p2',
-        title:'Empire.building',
-        description:'One of most famus sky scrapers in the world',
-        imageUrl:'https://homepages.cae.wisc.edu/~ece533/images/zelda.png',
-        address:'20 W 34th St, New York, NY 10001',
-        location:{
-            lat:40.7484405,
-            lng:-73.9878584
-        },
-        creator:'u2'
-    }
-]
-const UserPlaces = () => {
-    const id = useParams().userId
-    const loadPlaces = dummyPlaceData.filter(place=>place.creator === id) 
+
+const UserPlaces = (props) => {
+    const [places,setPlaces]=useState([])
+    const {isLoading,error,sendRequest,clearError} = useHttpClient()
+    useEffect(()=>{
+        let id = props.match.params.userId
+        const getAllPlacesByUserId= async () => {
+            try {
+              const response = await sendRequest(`http://localhost:5001/api/places/user/${id}`, "GET");
+              setPlaces(response)
+            } catch (err) {}
+          };
+          getAllPlacesByUserId();
+    },[sendRequest])
+     const id = useParams().userId
+    const loadPlaces = places.filter(place=>place.creator === id) 
     return (
-        <PlaceList items={loadPlaces} />
+        <>
+        {error && <ErrorModal error={error} onClear={clearError} />}
+        {isLoading && <LoadingSpinner asOverlay/>}
+        {!isLoading && places && <PlaceList items={places} />}
+        </>
     );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Input from '../../shared/components/FormElements/Input'
 import Button from '../../shared/components/FormElements/Button/Button'
 import {
@@ -7,11 +7,14 @@ import {
 } from '../../shared/components/util/validators';
 import './FormPlace.css';
 import { useForm } from '../../shared/components/hooks/form-hook';
-
-
+import { useHttpClient } from '../../shared/components/hooks/http-hook';
+import { AuthContext } from '../../shared/components/context/auth-context';
+import { Redirect, useHistory } from 'react-router';
 
 const NewPlace = () => {
- 
+const {isLoading,error,sendRequest,clearError}=useHttpClient() 
+const auth= useContext(AuthContext)
+const history = useHistory()
 const [formState,inputHandler]=useForm({
   title: {
     value: '',
@@ -27,9 +30,24 @@ const [formState,inputHandler]=useForm({
   }
 },false)
   
-  const placeSubmitHandler=(event)=>{
+  const placeSubmitHandler=async(event)=>{
     event.preventDefault()
-    console.log(formState.inputs)
+    try {
+      await sendRequest(
+        'http://localhost:5001/api/places',
+        'POST',
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          address: formState.inputs.address.value,
+          creator:auth.userId
+        }),
+        {
+          'Content-Type': 'application/json'
+        }
+      );
+     history.push('/')
+    } catch (err) {}
   }
   return (
     <form className="place-form" onSubmit={placeSubmitHandler}>
