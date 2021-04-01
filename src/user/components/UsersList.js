@@ -7,16 +7,16 @@ const UsersList = (props) => {
     return (
       <div className="center">
         <Card>
-        <h2>No user found.</h2>
+          <h2>No user found.</h2>
         </Card>
       </div>
     );
   }
   return (
-  <ul className="users-list">
+    <ul className="users-list">
       {props.items.map((user) => {
         return (
-          <UserItem 
+          <UserItem
             key={user.id}
             id={user.id}
             image={user.image}

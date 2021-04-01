@@ -16,7 +16,7 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const {isLoading,error,sendRequest,clearError}=useHttpClient() 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -56,36 +56,36 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const authSubmitHandler = async event => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (isLoginMode) {
       try {
         const response = await sendRequest(
-          'http://localhost:5001/api/users/login',
-          'POST',
+          "http://localhost:5001/api/users/login",
+          "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
-            password: formState.inputs.password.value
+            password: formState.inputs.password.value,
           }),
           {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           }
         );
         auth.login(response.user.id);
       } catch (err) {}
     } else {
       try {
-        const response= await sendRequest(
-          'http://localhost:5001/api/users/signup',
-          'POST',
+        const response = await sendRequest(
+          "http://localhost:5001/api/users/signup",
+          "POST",
           JSON.stringify({
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
-            password: formState.inputs.password.value
+            password: formState.inputs.password.value,
           }),
           {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           }
         );
 
@@ -132,7 +132,7 @@ const Auth = () => {
             id="password"
             type="password"
             label="Password"
-            validators={[VALIDATOR_MINLENGTH(5)]}
+            validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 5 characters."
             onInput={inputHandler}
           />

@@ -9,8 +9,11 @@ const Users = (props) => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const response = await sendRequest("http://localhost:5001/api/users", "GET");
-        setUsers(response)
+        const response = await sendRequest(
+          "http://localhost:5001/api/users",
+          "GET"
+        );
+        setUsers(response);
       } catch (err) {}
     };
     getAllUsers();

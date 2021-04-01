@@ -26,6 +26,15 @@
   color: #ff0055;
 }
 
+.button--success {
+  background: #194199;
+  color: #00ffff;
+}
+.button--success:hover,
+.button--success:active {
+  background: #194199;
+  border-color: #194199;
+}
 .button--inverse:hover,
 .button--inverse:active {
   color: white;
@@ -36,6 +45,7 @@
   background: #830000;
   border-color: #830000;
 }
+
 
 .button--danger:hover,
 .button--danger:active {

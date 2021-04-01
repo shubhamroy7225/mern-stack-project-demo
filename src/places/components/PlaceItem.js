@@ -3,32 +3,31 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
 import Modal from "../../shared/components/UIElements/Modal/Modal";
 import Map from "../../shared/components/UIElements/Map/Map";
-import {AuthContext} from '../../shared/components/context/auth-context'
-import "./PlaceItem.css";
+import { AuthContext } from "../../shared/components/context/auth-context";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
-import { useParams } from "react-router";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import "./PlaceItem.css";
 const PlaceItem = (props) => {
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const placeId = useParams().placeId;
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
   const cancelDeleteWarningHandler = () => {
     setShowConfirmModal(false);
   };
-  const confirmDeleteWarningHandler = async() => {
+  const confirmDeleteWarningHandler = async () => {
     setShowConfirmModal(false);
     try {
-      const response = await sendRequest(
-        `http://localhost:5001/api/places/${placeId}`,
-        "DELETE",
+      await sendRequest(
+        `http://localhost:5001/api/places/${props.id}`,
+        "DELETE"
       );
-      console.log(response)
-    }catch (err) {}
-
+      props.onDelete(props.id);
+    } catch (err) {}
   };
 
   const openMapHandler = () => {
@@ -39,6 +38,7 @@ const PlaceItem = (props) => {
   };
   return (
     <>
+      {error && <ErrorModal error={error} onClear={clearError} />}
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
@@ -52,14 +52,18 @@ const PlaceItem = (props) => {
         </div>
       </Modal>
       <Modal
-      show={showConfirmModal}
-      onCancel={cancelDeleteWarningHandler}
+        show={showConfirmModal}
+        onCancel={cancelDeleteWarningHandler}
         header="Are you sure?"
         footerClass="place-item__modal-actions"
         footer={
           <>
-            <Button invarse onClick={cancelDeleteWarningHandler}>CANCEL</Button>
-            <Button danger onClick={confirmDeleteWarningHandler}>DELETE</Button>
+            <Button invarse onClick={cancelDeleteWarningHandler}>
+              CANCEL
+            </Button>
+            <Button danger onClick={confirmDeleteWarningHandler}>
+              DELETE
+            </Button>
           </>
         }
       >
@@ -71,6 +75,7 @@ const PlaceItem = (props) => {
       <li className="place-item">
         <Card>
           <div className="place-item__image">
+            {isLoading && <LoadingSpinner asOverlay />}
             <img src={props.image} alt={props.title} />
           </div>
           <div className="place-item__info">
@@ -82,10 +87,14 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn &&
-            <Button to={`/place/${props.id}`}>EDIT</Button>}
-             {auth.isLoggedIn &&
-            <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
+            {auth.userId === props.createId && (
+              <Button to={`/place/${props.id}`}>EDIT</Button>
+            )}
+            {auth.userId === props.createId && (
+              <Button danger onClick={showDeleteWarningHandler}>
+                DELETE
+              </Button>
+            )}
           </div>
         </Card>
       </li>

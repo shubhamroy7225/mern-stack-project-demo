@@ -1,6 +1,6 @@
 import React from "react";
 import PlaceItem from "./PlaceItem";
-import Card from '../../shared/components/UIElements/Card/Card'
+import Card from "../../shared/components/UIElements/Card/Card";
 import "./PlaceList.css";
 import Button from "../../shared/components/FormElements/Button/Button";
 const PlaceList = (props) => {
@@ -14,20 +14,23 @@ const PlaceList = (props) => {
       </div>
     );
   }
- 
+
   return (
     <ul className="place-list">
       {props.items.map((place) => {
-        return <PlaceItem 
-                key={place.id}
-                id={place.id}
-                image={place.image}
-                title={place.title}
-                description={place.description}
-                address={place.address}
-                createId={place.createId}
-                coordinates={place.location}
-        />;
+        return (
+          <PlaceItem
+            key={place.id}
+            id={place.id}
+            image={place.image}
+            title={place.title}
+            description={place.description}
+            address={place.address}
+            createId={place.creator}
+            coordinates={place.location}
+            onDelete={props.onDeletePlace}
+          />
+        );
       })}
     </ul>
   );
