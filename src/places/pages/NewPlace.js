@@ -12,6 +12,7 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { useHistory } from "react-router";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
 
 const NewPlace = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -31,6 +32,10 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      image:{
+        value:null,
+        isValid:false
+      },
     },
     false
   );
@@ -38,17 +43,18 @@ const NewPlace = () => {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
+      const formData = new FormData()
+      formData.append('title',formState.inputs.title.value,)
+      formData.append('description',formState.inputs.description.value,)
+      formData.append('address',formState.inputs.address.value,)
+      formData.append('creator',auth.userId,)
+      formData.append('image',formState.inputs.image.value,)
       await sendRequest(
         "http://localhost:5001/api/places",
         "POST",
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId,
-        }),
+        formData,
         {
-          "Content-Type": "application/json",
+          Authorization: auth.token
         }
       );
       history.push("/");
@@ -68,6 +74,7 @@ const NewPlace = () => {
           errorText="Please enter a valid title."
           onInput={inputHandler}
         />
+         <ImageUpload  id="image" onInput={inputHandler} errorText="Please propvide an image"/>
         <Input
           id="description"
           element="textarea"

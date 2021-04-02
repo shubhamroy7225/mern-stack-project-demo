@@ -24,7 +24,11 @@ const PlaceItem = (props) => {
     try {
       await sendRequest(
         `http://localhost:5001/api/places/${props.id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {
+          Authorization:auth.token
+        }
       );
       props.onDelete(props.id);
     } catch (err) {}
@@ -76,7 +80,7 @@ const PlaceItem = (props) => {
         <Card>
           <div className="place-item__image">
             {isLoading && <LoadingSpinner asOverlay />}
-            <img src={props.image} alt={props.title} />
+            <img src={`http://localhost:5001/${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>

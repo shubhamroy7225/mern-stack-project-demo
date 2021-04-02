@@ -78,8 +78,8 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
-        auth.login(response.user.id);
-      } catch (err) {}
+        auth.login(response.userId,response.token);
+      } catch (err) {}  
     } else {
       try {
         const formData = new FormData()
@@ -92,7 +92,7 @@ const Auth = () => {
           "POST",
          formData
         );
-        auth.login(response.id);
+        auth.login(response.userId,response.token);
       } catch (err) {}
     }
   };
@@ -121,7 +121,7 @@ const Auth = () => {
               onInput={inputHandler}
             />
           )}
-          {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler}/>}
+          {!isLoginMode && <ImageUpload center id="image" errorText="Please propvide an image" onInput={inputHandler}/>}
           <Input
             element="input"
             id="email"

@@ -13,19 +13,19 @@ import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
   const [userId, setUserId] = useState();
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid,token) => {
+    setToken(token);
     setUserId(uid)
   }, []);
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null)
   }, []);
 
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/" component={Users} exact />
@@ -49,7 +49,8 @@ function App() {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token:token,
         userId:userId,
         login: login,
         logout: logout,
@@ -58,14 +59,6 @@ function App() {
       <Router>
         <MainNavigation />
         <main>
-          {/* <Switch>
-            <Route path="/" component={Users} exact />
-            <Route path="/place/new" component={NewPlace} exact />
-            <Route path="/place/:placeId" component={UpdatePlace} exact />
-            <Route path="/:userId/places" component={UserPlaces} exact />
-            <Route path="/auth" component={Auth} exact />
-            <Redirect to="/" />
-          </Switch> */}
           {routes}
         </main>
       </Router>
