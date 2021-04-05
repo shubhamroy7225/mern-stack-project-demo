@@ -10,7 +10,7 @@ const Users = (props) => {
     const getAllUsers = async () => {
       try {
         const response = await sendRequest(
-          "http://localhost:5001/api/users",
+          process.env.REACT_APP_BACKEND_URL + "/users",
           "GET"
         );
         setUsers(response);

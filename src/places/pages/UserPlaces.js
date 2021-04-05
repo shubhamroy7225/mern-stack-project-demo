@@ -13,7 +13,7 @@ const UserPlaces = (props) => {
     const getAllPlacesByUserId = async () => {
       try {
         const response = await sendRequest(
-          `http://localhost:5001/api/places/user/${id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/places/user/${id}`,
           "GET"
         );
         setPlaces(response);

@@ -49,7 +49,7 @@ const NewPlace = () => {
       formData.append('address',formState.inputs.address.value,)
       formData.append('image',formState.inputs.image.value,)
       await sendRequest(
-        "http://localhost:5001/api/places",
+        process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
         formData,
         {
