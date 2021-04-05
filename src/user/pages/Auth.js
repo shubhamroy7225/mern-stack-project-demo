@@ -91,6 +91,7 @@ const Auth = () => {
           "POST",
          formData
         );
+        console.log(response)
         auth.login(response.userId,response.token);
       } catch (err) {}
     }
