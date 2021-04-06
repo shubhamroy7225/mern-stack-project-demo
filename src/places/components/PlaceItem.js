@@ -9,7 +9,6 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import "./PlaceItem.css";
-import { useParams } from "react-router";
 const PlaceItem = (props) => {
   console.log(props);
   const auth = useContext(AuthContext);
@@ -117,7 +116,10 @@ const PlaceItem = (props) => {
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
-          <div className="place-item__actions">
+
+          
+            <div className='rating_manage'>
+            <div className='rating_manage1'>
             {auth.token && (
               <ReactStars
                 count={5}
@@ -131,11 +133,16 @@ const PlaceItem = (props) => {
                 activeColor="#ffd700"
               />
             )}
+            <div className ='rating'>
+              {rating}
+            </div>
+            </div>
             {auth.token && (
               <Button inverse onClick={ratingHandler}>
                 SUBMIT RATING
               </Button>
             )}
+            
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
