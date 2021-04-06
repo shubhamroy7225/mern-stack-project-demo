@@ -32,9 +32,9 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
-      image:{
-        value:null,
-        isValid:false
+      image: {
+        value: null,
+        isValid: false,
       },
     },
     false
@@ -43,22 +43,23 @@ const NewPlace = () => {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const formData = new FormData()
-      formData.append('title',formState.inputs.title.value,)
-      formData.append('description',formState.inputs.description.value,)
-      formData.append('address',formState.inputs.address.value,)
-      formData.append('image',formState.inputs.image.value,)
+      const formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("image", formState.inputs.image.value);
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
         formData,
         {
-          Authorization: auth.token
+          Authorization: auth.token,
         }
       );
       history.push("/");
     } catch (err) {}
   };
+  
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
@@ -73,7 +74,11 @@ const NewPlace = () => {
           errorText="Please enter a valid title."
           onInput={inputHandler}
         />
-         <ImageUpload  id="image" onInput={inputHandler} errorText="Please propvide an image"/>
+        <ImageUpload
+          id="image"
+          onInput={inputHandler}
+          errorText="Please propvide an image"
+        />
         <Input
           id="description"
           element="textarea"
