@@ -9,10 +9,14 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import "./PlaceItem.css";
+import { useParams } from "react-router";
 const PlaceItem = (props) => {
-  console.log(props);
   const auth = useContext(AuthContext);
   const [rating, setRating] = useState(props.rating);
+  const [comment, setComment] = useState({
+    userId: "",
+    comment: "",
+  });
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -54,7 +58,7 @@ const PlaceItem = (props) => {
         `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}/reviews`,
         "PATCH",
         JSON.stringify({
-          id:props.id,
+          id: props.id,
           rating: rating,
         }),
         {
@@ -65,6 +69,23 @@ const PlaceItem = (props) => {
     } catch (err) {
       console.log(err.message);
     }
+  };
+  const changedHandler = (event) => {
+    setComment({...comment,userId:auth.userId,comment:event.target.value})
+  };
+  const authSubmitHandler = async(event) => {
+    event.preventDefault();
+    try{
+    await sendRequest(
+      process.env.REACT_APP_BACKEND_URL + "/places/comments",
+      "POST",
+      JSON.stringify({comment,id:props.id}),
+      {
+        "Content-Type": "application/json",
+        Authorization: auth.token,
+      }
+    );
+  } catch (err) {}
   };
   return (
     <>
@@ -117,33 +138,30 @@ const PlaceItem = (props) => {
             <p>{props.description}</p>
           </div>
 
-          
-            <div className='rating_manage'>
-            <div className='rating_manage1'>
-            {auth.token && (
-              <ReactStars
-                count={5}
-                value={rating}
-                onChange={ratingChanged}
-                size={24}
-                isHalf={true}
-                emptyIcon={<i className="far fa-star"></i>}
-                halfIcon={<i className="fa fa-star-half-alt"></i>}
-                fullIcon={<i className="fa fa-star"></i>}
-                activeColor="#ffd700"
-              />
-            )}
-            <div className ='rating'>
-              {rating}
-            </div>
+          <div className="rating_manage">
+            <div className="rating_manage1">
+              {auth.token && (
+                <ReactStars
+                  count={5}
+                  value={rating}
+                  onChange={ratingChanged}
+                  size={24}
+                  isHalf={true}
+                  emptyIcon={<i className="far fa-star"></i>}
+                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                  fullIcon={<i className="fa fa-star"></i>}
+                  activeColor="#ffd700"
+                />
+              )}
+              <div className="rating">{rating}</div>
             </div>
             {auth.token && (
               <Button inverse onClick={ratingHandler}>
                 SUBMIT RATING
               </Button>
             )}
-            
           </div>
+
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
@@ -157,6 +175,14 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
+          </div>
+          <div className="comment">
+            <form onSubmit={authSubmitHandler}>
+              <input type="text" onChange={changedHandler} />
+              <Button type='submit'>
+                SUBMIT
+              </Button>
+            </form>
           </div>
         </Card>
       </li>
