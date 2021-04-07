@@ -39,7 +39,7 @@ const ImageUpload = props => {
   const pickImageHandler = () => {
     filePickerRef.current.click();
   };
-
+console.log(previewUrl)
   return (
     <div className="form-control">
       <input
@@ -65,3 +65,4 @@ const ImageUpload = props => {
 };
 
 export default ImageUpload;
+

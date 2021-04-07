@@ -10,9 +10,12 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/Lo
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import "./PlaceItem.css";
 import { useParams } from "react-router";
+import CommentList from "./CommentList";
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
   const [rating, setRating] = useState(props.rating);
+  const [comments, setComments] = useState([]);
+  const [update, setUpdate] = useState(false);
   const [comment, setComment] = useState({
     userId: "",
     comment: "",
@@ -20,6 +23,23 @@ const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const id = useParams().userId;
+  useEffect(() => {
+    const getAllPlacesByUserId = async () => {
+      try {
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/places/user/${id}`,
+          "GET"
+        );
+        response.map((place) => {
+          return setComments(place.comments);
+        });
+      } catch (err) {}
+    };
+    getAllPlacesByUserId();
+  }, [sendRequest, id, update]);
+
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
@@ -54,7 +74,7 @@ const PlaceItem = (props) => {
 
   const ratingHandler = async () => {
     try {
-      const response = await sendRequest(
+       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}/reviews`,
         "PATCH",
         JSON.stringify({
@@ -71,21 +91,28 @@ const PlaceItem = (props) => {
     }
   };
   const changedHandler = (event) => {
-    setComment({...comment,userId:auth.userId,comment:event.target.value})
+    setComment({
+      ...comment,
+      userId: auth.userId,
+      comment: event.target.value,
+    });
   };
-  const authSubmitHandler = async(event) => {
+
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
-    try{
-    await sendRequest(
-      process.env.REACT_APP_BACKEND_URL + "/places/comments",
-      "POST",
-      JSON.stringify({comment,id:props.id}),
-      {
-        "Content-Type": "application/json",
-        Authorization: auth.token,
-      }
-    );
-  } catch (err) {}
+    setUpdate(false);
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/places/comments",
+        "POST",
+        JSON.stringify({ comment, id: props.id }),
+        {
+          "Content-Type": "application/json",
+          Authorization: auth.token,
+        }
+      );
+      setUpdate(true);
+    } catch (err) {}
   };
   return (
     <>
@@ -137,7 +164,21 @@ const PlaceItem = (props) => {
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
+          <div className="place-item__actions">
+            <Button inverse onClick={openMapHandler}>
+              VIEW ON MAP
+            </Button>
+            {auth.userId === props.createId && (
+              <Button to={`/place/${props.id}`}>EDIT</Button>
+            )}
 
+            {auth.userId === props.createId && (
+              <Button danger onClick={showDeleteWarningHandler}>
+                DELETE
+              </Button>
+            )}
+          </div>
+          {auth.token && <hr />}
           <div className="rating_manage">
             <div className="rating_manage1">
               {auth.token && (
@@ -153,7 +194,7 @@ const PlaceItem = (props) => {
                   activeColor="#ffd700"
                 />
               )}
-              <div className="rating">{rating}</div>
+              {auth.token && <div className="rating">{rating?rating.toFixed(2):null}</div>}
             </div>
             {auth.token && (
               <Button inverse onClick={ratingHandler}>
@@ -161,33 +202,30 @@ const PlaceItem = (props) => {
               </Button>
             )}
           </div>
-
-          <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>
-              VIEW ON MAP
-            </Button>
-            {auth.userId === props.createId && (
-              <Button to={`/place/${props.id}`}>EDIT</Button>
-            )}
-
-            {auth.userId === props.createId && (
-              <Button danger onClick={showDeleteWarningHandler}>
-                DELETE
-              </Button>
-            )}
-          </div>
-          <div className="comment">
-            <form onSubmit={authSubmitHandler}>
-              <input type="text" onChange={changedHandler} />
-              <Button type='submit'>
-                SUBMIT
-              </Button>
-            </form>
-          </div>
+          {auth.token && <hr />}
+          {auth.token && (
+            <div className="comment">
+              <form onSubmit={authSubmitHandler}>
+                <div className="add_comments">
+                  <input
+                    type="text"
+                    onChange={changedHandler}
+                    placeholder="Please enter your comment..."
+                  />
+                  <Button inverse type="submit">
+                    ADD COMMENT
+                  </Button>
+                </div>
+              </form>
+            </div>
+          )}
+          {comments &&
+            comments.map((comment, index) => {
+              return <CommentList key={index} comment={comment} />;
+            })}
         </Card>
       </li>
     </>
   );
 };
-
 export default PlaceItem;

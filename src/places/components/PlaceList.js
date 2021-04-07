@@ -14,7 +14,6 @@ const PlaceList = (props) => {
       </div>
     );
   }
-
   return (
     <ul className="place-list">
       {props.items.map((place) => {
@@ -36,5 +35,4 @@ const PlaceList = (props) => {
     </ul>
   );
 };
-
-export default PlaceList;
+export default PlaceList

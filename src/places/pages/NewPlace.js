@@ -33,7 +33,7 @@ const NewPlace = () => {
         isValid: false,
       },
       image: {
-        value: null,
+        value: [],
         isValid: false,
       },
     },
@@ -47,6 +47,9 @@ const NewPlace = () => {
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
       formData.append("address", formState.inputs.address.value);
+      for(let img in formState.inputs.image.value){
+        formData.append("image", formState.inputs.image.value[img]);
+      }
       formData.append("image", formState.inputs.image.value);
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
