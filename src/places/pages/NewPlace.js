@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
 import {
@@ -21,7 +21,15 @@ const NewPlace = () => {
   const history = useHistory();
   const [formState, inputHandler] = useForm(
     {
+      category: {
+        value: "Tourist Place",
+        isValid: false,
+      },
       title: {
+        value: "",
+        isValid: false,
+      },
+      yourexprience: {
         value: "",
         isValid: false,
       },
@@ -33,12 +41,24 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      city: {
+        value: "",
+        isValid: false,
+      },
+      state: {
+        value: "",
+        isValid: false,
+      },
+      country: {
+        value: "India",
+        isValid: false,
+      },
     },
     false
   );
 
   const onChangeHandler = (event) => {
-    console.log(event.target.files)
+    console.log(event.target.files);
     setSelectedFile(event.target.files);
   };
 
@@ -46,14 +66,17 @@ const NewPlace = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
+      formData.append("category", formState.inputs.category.value);
       formData.append("title", formState.inputs.title.value);
-      formData.append("description", formState.inputs.description.value);
-      formData.append("address", formState.inputs.address.value);
-      //formData.append("image", formState.inputs.image.value);
       for (var x = 0; x < selectedFile.length; x++) {
         formData.append("file", selectedFile[x]);
       }
-
+      formData.append("yourexprience", formState.inputs.yourexprience.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("city", formState.inputs.city.value);
+      formData.append("state", formState.inputs.state.value);
+      formData.append("country", formState.inputs.country.value);
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
@@ -71,6 +94,22 @@ const NewPlace = () => {
       {error && <ErrorModal error={error} onClear={clearError} />}
       <form className="place-form" onSubmit={placeSubmitHandler}>
         {isLoading && <LoadingSpinner asOverlay />}
+
+        <Input
+          id="category"
+          element="select"
+          type="text"
+          label="Pick your favorite flavor:"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please select category."
+          onInput={inputHandler}
+        >
+          <option value="grapefruit">Grapefruit</option>
+          <option value="lime">Lime</option>
+          <option value="coconut">Coconut</option>
+          <option value="mango">Mango</option>
+        </Input>
+
         <Input
           id="title"
           element="input"
@@ -84,6 +123,14 @@ const NewPlace = () => {
           id="image"
           onChangeHandler={onChangeHandler}
           errorText="Please propvide an image"
+        />
+        <Input
+          id="yourexprience"
+          element="textarea"
+          label="Your Exprience"
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText="Please enter at least 5 characters."
+          onInput={inputHandler}
         />
         <Input
           id="description"
@@ -102,6 +149,38 @@ const NewPlace = () => {
           errorText="Please enter a valid address."
           onInput={inputHandler}
         />
+        <Input
+          id="city"
+          element="input"
+          type="text"
+          label="City"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid city."
+          onInput={inputHandler}
+        />
+        <Input
+          id="state"
+          element="input"
+          type="text"
+          label="State"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid state."
+          onInput={inputHandler}
+        />
+        <Input
+          id="country"
+          element="select"
+          type="text"
+          label="Pick your Country:"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please select country."
+          onInput={inputHandler}
+        >
+          <option value="grapefruit">India</option>
+          <option value="lime">USA</option>
+          <option value="coconut">UK</option>
+          <option value="mango">Aus</option>
+        </Input>
         <Button type="submit" disabled={!formState.isValid}>
           ADD PLACE
         </Button>

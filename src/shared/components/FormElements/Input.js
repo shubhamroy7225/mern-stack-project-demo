@@ -48,25 +48,39 @@ const Input = (props) => {
       type: "TOUCH",
     });
   };
-
-  const element =
-    props.element === "input" ? (
-      <input
+  let element;
+  element =
+    props.element === "select" ? (
+      <select
         id={props.id}
         type={props.type}
         placeholder={props.placeholder}
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
-      />
+      >
+        {props.children}
+      </select>
     ) : (
-      <textarea
-        id={props.id}
-        rows={props.rows || 3}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
+      (element =
+        props.element === "input" ? (
+          <input
+            id={props.id}
+            type={props.type}
+            placeholder={props.placeholder}
+            onChange={changeHandler}
+            onBlur={touchHandler}
+            value={inputState.value}
+          />
+        ) : (
+          <textarea
+            id={props.id}
+            rows={props.rows || 3}
+            onChange={changeHandler}
+            onBlur={touchHandler}
+            value={inputState.value}
+          />
+        ))
     );
 
   return (

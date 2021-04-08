@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import AllPlaces from "./places/pages/AllPlaces";
 import { AuthContext } from "./shared/components/context/auth-context";
 import { useAuth } from "./shared/components/hooks/auth-hook";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner/LoadingSpinner";
@@ -24,6 +25,7 @@ function App() {
   if (token) {
     routes = (
       <Switch>
+         <Route path="/places" component={AllPlaces} exact />
         <Route path="/" component={Users} exact />
         <Route path="/place/new" component={NewPlace} exact />
         <Route path="/place/:placeId" component={UpdatePlace} exact />
@@ -34,7 +36,9 @@ function App() {
   } else {
     routes = (
       <Switch>
+          <Route path="/places" component={AllPlaces} exact />
         <Route path="/" component={Users} exact />
+
         <Route path="/auth" component={Auth} exact />
         <Route path="/:userId/places" component={UserPlaces} exact />
         <Redirect to="/" />
