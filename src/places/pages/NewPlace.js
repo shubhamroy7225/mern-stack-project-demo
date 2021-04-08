@@ -79,6 +79,7 @@ const NewPlace = () => {
         />
         <ImageUpload
           id="image"
+          multiple
           onInput={inputHandler}
           errorText="Please propvide an image"
         />
