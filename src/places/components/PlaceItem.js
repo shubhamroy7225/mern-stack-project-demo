@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+
+import ImageGallery from "react-image-gallery";
 import ReactStars from "react-rating-stars-component";
 import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
@@ -23,8 +25,14 @@ const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
   const id = useParams().userId;
+  let newArray = [];
+  props.image.map((img) => {
+    img["original"] = process.env.REACT_APP_ASSET_URL + "/" + img.original;
+    img["thumbnail"] = null;
+    newArray.push(img)
+  });
+  console.log(newArray);
   useEffect(() => {
     const getAllPlacesByUserId = async () => {
       try {
@@ -74,7 +82,7 @@ const PlaceItem = (props) => {
 
   const ratingHandler = async () => {
     try {
-       await sendRequest(
+      await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}/reviews`,
         "PATCH",
         JSON.stringify({
@@ -154,10 +162,13 @@ const PlaceItem = (props) => {
         <Card>
           <div className="place-item__image">
             {isLoading && <LoadingSpinner asOverlay />}
-            <img
+            {/* <img
               src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
               alt={props.title}
-            />
+            /> */}
+            {/* <ImageGallery
+              items={newArray}
+            /> */}
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
@@ -194,7 +205,11 @@ const PlaceItem = (props) => {
                   activeColor="#ffd700"
                 />
               )}
-              {auth.token && <div className="rating">{rating?rating.toFixed(2):null}</div>}
+              {auth.token && (
+                <div className="rating">
+                  {rating ? rating.toFixed(2) : null}
+                </div>
+              )}
             </div>
             {auth.token && (
               <Button inverse onClick={ratingHandler}>

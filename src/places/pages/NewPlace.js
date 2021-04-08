@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
 import {
@@ -12,10 +12,11 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { useHistory } from "react-router";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
+import MultipleImageUpload from "../../shared/components/FormElements/ImageUpload/MultipleImagesUpload";
 
 const NewPlace = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [selectedFile, setSelectedFile] = useState();
   const auth = useContext(AuthContext);
   const history = useHistory();
   const [formState, inputHandler] = useForm(
@@ -32,13 +33,14 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
-      image: {
-        value: [],
-        isValid: false,
-      },
     },
     false
   );
+
+  const onChangeHandler = (event) => {
+    console.log(event.target.files)
+    setSelectedFile(event.target.files);
+  };
 
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
@@ -47,10 +49,11 @@ const NewPlace = () => {
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
       formData.append("address", formState.inputs.address.value);
-      for(let img in formState.inputs.image.value){
-        formData.append("image", formState.inputs.image.value[img]);
+      //formData.append("image", formState.inputs.image.value);
+      for (var x = 0; x < selectedFile.length; x++) {
+        formData.append("file", selectedFile[x]);
       }
-      formData.append("image", formState.inputs.image.value);
+
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
@@ -62,7 +65,7 @@ const NewPlace = () => {
       history.push("/");
     } catch (err) {}
   };
-  
+
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
@@ -77,9 +80,9 @@ const NewPlace = () => {
           errorText="Please enter a valid title."
           onInput={inputHandler}
         />
-        <ImageUpload
+        <MultipleImageUpload
           id="image"
-          onInput={inputHandler}
+          onChangeHandler={onChangeHandler}
           errorText="Please propvide an image"
         />
         <Input

@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 
-import Button from '../Button/Button';
-import './ImageUpload.css';
+import Button from "../Button/Button";
+import "./ImageUpload.css";
 
 const ImageUpload = props => {
   const [file, setFile] = useState();
@@ -65,4 +65,5 @@ console.log(previewUrl)
 };
 
 export default ImageUpload;
+
 
