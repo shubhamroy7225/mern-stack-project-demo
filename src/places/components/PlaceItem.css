@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 .place-item {
   margin: 1rem 0;
 }
@@ -10,16 +12,16 @@
   padding: 1rem;
   text-align: center;
 }
-.rating_manage{
+.rating_manage {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.rating_manage1{
+.rating_manage1 {
   display: flex;
   flex-direction: row;
 }
-.rating{
+.rating {
   background: green;
   padding: 10px;
   border-radius: 50%;
@@ -62,12 +64,13 @@
 .place-item__actions a {
   margin: 0.5rem;
 }
-.map-container{
+.map-container {
   height: 10rem;
   width: 100%;
 }
+
 @media (min-width: 768px) {
   .place-item__image {
-    height: 20rem;
-  } 
+    height: 5rem;
+  }
 }
