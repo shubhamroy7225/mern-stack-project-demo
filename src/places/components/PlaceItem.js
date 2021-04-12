@@ -119,7 +119,7 @@ const PlaceItem = (props) => {
           {auth.token && <hr />}
           <RatingPlace rating={props.rating} id={props.id} />
           {auth.token && <hr />}
-          <UserComment id={props.id} />
+          <UserComment id={props.id} comment={props.comment} />
         </Card>
       </li>
     </>

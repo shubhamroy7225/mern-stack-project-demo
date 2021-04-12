@@ -6,15 +6,12 @@ const CommentList = (props) => {
     console.log(props);
     return (
         <li className='user-items'>
-            <Card>
             <div className="user-items__image">
+                <div className="Avatar">
                 <Avatar image={`${process.env.REACT_APP_ASSET_URL}/${props.comment.userImage}`} alt={props.user}/>
-                <h2>{props.comment.userName}</h2>
                 </div>
-                <div className="user-items__info">
-                <h2>{props.comment.userComment}</h2>
+                <b>{props.comment.userName}</b><p></p>{props.comment.userComment}
             </div>
-            </Card>  
         </li>
     );
 };

@@ -51,7 +51,8 @@ const AllPlaceItem = (props) => {
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
+            {props.city && props.state && props.country &&<h3>{props.city} {props.state}({props.country})</h3>}
+            {props.yourexprience?<p>Your Exprience:{props.yourexprience}</p>:null}
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">
@@ -59,8 +60,8 @@ const AllPlaceItem = (props) => {
               VIEW ON MAP
             </Button>
             <RatingPlace rating={props.rating} id={props.id} />
-            <UserComment id={props.id} />
           </div>
+          <UserComment id={props.id} comment={props.comment} />
         </Card>
       </li>
     </>

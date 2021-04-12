@@ -5,6 +5,8 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
 import CommentList from "./CommentList";
 import { useParams } from "react-router";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 const UserComment = (props) => {
   const auth = useContext(AuthContext);
   const id = useParams().userId
@@ -23,8 +25,11 @@ const UserComment = (props) => {
       comment: event.target.value,
     });
   };
+
   useEffect(() => {
+    if(id){
     const getAllPlacesByUserId = async () => {
+
       try {
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${id}`,
@@ -37,7 +42,9 @@ const UserComment = (props) => {
       } catch (err) {}
     };
     getAllPlacesByUserId();
+  }
   }, [sendRequest, id, update]);
+
   console.log(comments);
   const authSubmitHandler = async (event) => {
     event.preventDefault();
@@ -57,8 +64,11 @@ const UserComment = (props) => {
   };
 
   return (
-    <Card>
-      {auth.token && (<div className="comment">
+    <>
+     {error && <ErrorModal error={error} onClear={clearError} />}
+    {auth.token && (<Card>
+      <div className="comment">
+      {isLoading && <LoadingSpinner asOverlay />}
        <form onSubmit={authSubmitHandler}>
           <div className="add_comments">
             <input
@@ -71,12 +81,18 @@ const UserComment = (props) => {
             </Button>
           </div>
         </form>
-      </div>)}
-      {comments &&
+      </div>
+      
+    </Card>)}
+    {comments &&
         comments.map((comment, index) => {
           return <CommentList key={index} comment={comment} />;
         })}
-    </Card>
+        {props.comment &&
+        props.comment.map((comment, index) => {
+          return <CommentList key={index} comment={comment} />;
+        })}
+    </>
   );
 };
 

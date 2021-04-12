@@ -29,6 +29,12 @@ const AllPlaceList = (props) => {
             createId={place.creator}
             coordinates={place.location}
             rating={place.total_rating}
+            comment={place.comments}
+            yourexprience={place.yourexprience}
+            city={place.city}
+            state={place.state}
+            country={place.country}
+            
           />
         );
       })}
