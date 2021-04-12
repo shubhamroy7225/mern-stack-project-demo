@@ -8,10 +8,11 @@ import { useParams } from "react-router";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 const UserComment = (props) => {
+  console.log(props.comment)
   const auth = useContext(AuthContext);
   const id = useParams().userId
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState();
   const [update, setUpdate] = useState(false);
   const [comment, setComment] = useState({
     userId: "",
@@ -35,17 +36,17 @@ const UserComment = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${id}`,
           "GET"
         );
-        console.log(response);
         response.map((place) => {
           return setComments(place.comments);
         });
       } catch (err) {}
     };
     getAllPlacesByUserId();
+  }else{
+    setComments(props.comment)
   }
   }, [sendRequest, id, update]);
 
-  console.log(comments);
   const authSubmitHandler = async (event) => {
     event.preventDefault();
     setUpdate(false);
@@ -88,10 +89,10 @@ const UserComment = (props) => {
         comments.map((comment, index) => {
           return <CommentList key={index} comment={comment} />;
         })}
-        {props.comment &&
+        {/* {props.comment &&
         props.comment.map((comment, index) => {
           return <CommentList key={index} comment={comment} />;
-        })}
+        })} */}
     </>
   );
 };
