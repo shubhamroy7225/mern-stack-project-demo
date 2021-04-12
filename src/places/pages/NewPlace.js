@@ -22,7 +22,7 @@ const NewPlace = () => {
   const [formState, inputHandler] = useForm(
     {
       category: {
-        value: "Tourist Place",
+        value: "1",
         isValid: false,
       },
       title: {
@@ -50,7 +50,7 @@ const NewPlace = () => {
         isValid: false,
       },
       country: {
-        value: "India",
+        value: "",
         isValid: false,
       },
     },
@@ -103,7 +103,11 @@ const NewPlace = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please select category."
           onInput={inputHandler}
+          placeholder="Pick your category..."
         >
+          <option value="" disabled selected hidden>
+            Choose your place category
+          </option>
           <option value="grapefruit">Grapefruit</option>
           <option value="lime">Lime</option>
           <option value="coconut">Coconut</option>
@@ -176,6 +180,9 @@ const NewPlace = () => {
           errorText="Please select country."
           onInput={inputHandler}
         >
+          <option value="" disabled selected hidden>
+            Choose your country
+          </option>
           <option value="grapefruit">India</option>
           <option value="lime">USA</option>
           <option value="coconut">UK</option>
@@ -188,5 +195,4 @@ const NewPlace = () => {
     </>
   );
 };
-
 export default NewPlace;

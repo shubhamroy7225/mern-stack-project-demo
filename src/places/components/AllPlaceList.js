@@ -34,6 +34,7 @@ const AllPlaceList = (props) => {
             city={place.city}
             state={place.state}
             country={place.country}
+          
             
           />
         );

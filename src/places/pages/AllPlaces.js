@@ -6,6 +6,7 @@ import AllPlaceList from "../components/AllPlaceList";
 const AllPlaces = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [places, setPlaces] = useState([]);
+  const [creator, setCreator] = useState([]);
   useEffect(() => {
     const getAllUsers = async () => {
       try {
@@ -15,6 +16,9 @@ const AllPlaces = (props) => {
         );
         console.log(response);
         setPlaces(response);
+        response.map((item)=>{
+          setCreator(creator.push(item.creator))
+        })
       } catch (err) {}
     };
     getAllUsers();
@@ -24,7 +28,7 @@ const AllPlaces = (props) => {
     <div>
       {error && <ErrorModal error={error} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && places && <AllPlaceList items={places} />}
+      {!isLoading && places && <AllPlaceList items={places}/>}
     </div>
   );
 };

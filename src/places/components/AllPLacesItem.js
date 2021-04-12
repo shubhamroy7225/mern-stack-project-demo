@@ -61,7 +61,7 @@ const AllPlaceItem = (props) => {
             </Button>
             <RatingPlace rating={props.rating} id={props.id} />
           </div>
-          <UserComment id={props.id} comment={props.comment} />
+          <UserComment id={props.id} createId={props.createId} comment={props.comment} />
         </Card>
       </li>
     </>
