@@ -48,6 +48,7 @@ const RatingPlace = (props) => {
             halfIcon={<i className="fa fa-star-half-alt"></i>}
             fullIcon={<i className="fa fa-star"></i>}
             activeColor="#ffd700"
+            edit={auth.token?true:false}
           />
           <div className="rating">{rating ? rating.toFixed(2) : null}</div>
         </div>
