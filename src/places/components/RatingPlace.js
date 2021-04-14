@@ -7,7 +7,9 @@ import Button from "../../shared/components/FormElements/Button/Button";
 import "./PlaceItem.css";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+import { useParams } from "react-router";
 const RatingPlace = (props) => {
+  const placeId = useParams().placeId;
   const auth = useContext(AuthContext);
   const [rating, setRating] = useState(props.rating);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -17,10 +19,10 @@ const RatingPlace = (props) => {
   const ratingHandler = async () => {
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}/reviews`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}/reviews`,
         "PATCH",
         JSON.stringify({
-          id: props.id,
+          id: placeId,
           rating: rating,
         }),
         {
@@ -48,7 +50,7 @@ const RatingPlace = (props) => {
             halfIcon={<i className="fa fa-star-half-alt"></i>}
             fullIcon={<i className="fa fa-star"></i>}
             activeColor="#ffd700"
-            edit={auth.token?true:false}
+            edit={auth.token ? true : false}
           />
           <div className="rating">{rating ? rating.toFixed(2) : null}</div>
         </div>

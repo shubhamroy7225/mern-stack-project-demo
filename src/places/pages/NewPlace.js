@@ -108,10 +108,10 @@ const NewPlace = () => {
           <option value="" disabled selected hidden>
             Choose your place category
           </option>
-          <option value="grapefruit">Grapefruit</option>
-          <option value="lime">Lime</option>
-          <option value="coconut">Coconut</option>
-          <option value="mango">Mango</option>
+          <option value="grapefruit">Tourist Place</option>
+          <option value="lime">Business Place</option>
+          <option value="coconut">Zoo</option>
+          <option value="mango">Park</option>
         </Input>
 
         <Input

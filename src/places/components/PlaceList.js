@@ -1,6 +1,8 @@
 import React from "react";
 import PlaceItem from "./PlaceItem";
+import AllPlaceItem from "./AllPLacesItem";
 import Card from "../../shared/components/UIElements/Card/Card";
+import { Container, Row, Col } from 'react-grid-system';
 import "./PlaceList.css";
 import Button from "../../shared/components/FormElements/Button/Button";
 const PlaceList = (props) => {
@@ -15,11 +17,12 @@ const PlaceList = (props) => {
     );
   }
   return (
-    <ul className="place-list">
+    <Container>
+    <Row>
       {props.items.map((place) => {
-     
         return (
-          <PlaceItem
+          <Col sm={4}>
+          <AllPlaceItem
             key={place.id}
             id={place.id}
             image={place.image}
@@ -32,9 +35,11 @@ const PlaceList = (props) => {
             rating={place.total_rating}
             comment={place.comments}
           />
+          </Col>
         );
       })}
-    </ul>
+      </Row>
+</Container>
   );
 };
 export default PlaceList

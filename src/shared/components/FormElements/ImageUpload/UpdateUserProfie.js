@@ -1,13 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 
 import Button from "../Button/Button";
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 import "./ImageUpload.css";
 
-const ImageUpload = props => {
+const UserUpdateProfile = props => {
+console.log(props);
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
+
   const filePickerRef = useRef();
+
   useEffect(() => {
     if (!file) {
       return;
@@ -50,18 +54,16 @@ console.log(previewUrl)
       />
       <div className={`image-upload ${props.center && 'center'}`}>
         <div className="image-upload__preview">
-          {previewUrl && <img src={previewUrl} alt="Preview" />}
-          {!previewUrl && <p>Please pick an image.</p>}
+          <img src={previewUrl?previewUrl:props.imageUrl} alt="Preview" />
         </div>
         <Button type="button" onClick={pickImageHandler}>
-          PICK IMAGE
+         UPDATE IMAGE
         </Button>
-      </div>
-      {!isValid && <p>{props.errorText}</p>}
+      </div> 
     </div>
   );
 };
 
-export default ImageUpload;
+export default UserUpdateProfile;
 
 

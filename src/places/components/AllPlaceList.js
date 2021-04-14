@@ -3,7 +3,7 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import "./PlaceList.css";
 import Button from "../../shared/components/FormElements/Button/Button";
 import AllPlaceItem from "./AllPLacesItem";
-
+import { Container, Row, Col } from 'react-grid-system';
 const AllPlaceList = (props) => {
   if (props.items.length === 0) {
     return (
@@ -16,9 +16,11 @@ const AllPlaceList = (props) => {
     );
   }
   return (
-    <ul className="place-list">
+<Container>
+  <Row>
       {props.items.map((place) => {
         return (
+          <Col sm={4}>
           <AllPlaceItem
             key={place.id}
             id={place.id}
@@ -34,12 +36,12 @@ const AllPlaceList = (props) => {
             city={place.city}
             state={place.state}
             country={place.country}
-          
-            
           />
+          </Col>
         );
       })}
-    </ul>
+  </Row>
+</Container>
   );
 };
 export default AllPlaceList

@@ -8,7 +8,9 @@ import { useParams } from "react-router";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 const UserComment = (props) => {
+  console.log(props);
   const auth = useContext(AuthContext);
+  const placeId = useParams().placeId;
   const id = useParams().userId;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [comments, setComments] = useState();
@@ -43,10 +45,10 @@ const UserComment = (props) => {
       };
       getAllPlacesByUserId();
     } else {
-      setComments([]);
+      setComments(props.comment);
     }
     setUpdate(false);
-  }, [sendRequest, id, update]);
+  }, [sendRequest, id, update,props.createId]);
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
@@ -54,7 +56,7 @@ const UserComment = (props) => {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places/comments",
         "POST",
-        JSON.stringify({ comment, id: props.id }),
+        JSON.stringify({ comment, id: placeId }),
         {
           "Content-Type": "application/json",
           Authorization: auth.token,

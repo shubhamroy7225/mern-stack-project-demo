@@ -5,11 +5,15 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import Dashboard from "./Dashboard/Dashboard";
+import AllPlaceItem from "./places/components/AllPLacesItem";
+import PlaceDetails from "./places/components/PlaceDetails";
 import AllPlaces from "./places/pages/AllPlaces";
 import { AuthContext } from "./shared/components/context/auth-context";
 import { useAuth } from "./shared/components/hooks/auth-hook";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner/LoadingSpinner";
-
+import UpdatePassword from "./user/components/UpdatePassword";
+import UserProfile from "./user/components/UserProfile";
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
 const Users = React.lazy(() => import("./user/pages/Users"));
 const MainNavigation = React.lazy(() =>
@@ -25,23 +29,27 @@ function App() {
   if (token) {
     routes = (
       <Switch>
-         <Route path="/places" component={AllPlaces} exact />
-        <Route path="/" component={Users} exact />
+        <Route path="/" component={Dashboard} exact />
+        <Route path="/places" component={AllPlaces} exact />
+        <Route path="/users" component={Users} exact />
         <Route path="/place/new" component={NewPlace} exact />
         <Route path="/place/:placeId" component={UpdatePlace} exact />
         <Route path="/:userId/places" component={UserPlaces} exact />
-        <Redirect to="/" />
+        <Route path="/places/details/:placeId" component={PlaceDetails} exact />
+        <Route path="/user/:userId/profile" component={UserProfile} exact />
+        <Route path="/user/:userId/password" component={UpdatePassword} exact />
+        <Redirect to="/places" />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-          <Route path="/places" component={AllPlaces} exact />
-        <Route path="/" component={Users} exact />
-
+        <Route path="/places" component={AllPlaces} exact />
+        <Route path="/users" component={Users} exact />
+        <Route path="/places/details/:placeId" component={PlaceDetails} exact />
         <Route path="/auth" component={Auth} exact />
         <Route path="/:userId/places" component={UserPlaces} exact />
-        <Redirect to="/" />
+        <Redirect to="/places" />
       </Switch>
     );
   }

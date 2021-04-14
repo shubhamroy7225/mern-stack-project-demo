@@ -56,7 +56,7 @@ const PlaceItem = (props) => {
   };
 
   return (
-    <>
+    <>  
       {error && <ErrorModal error={error} onClear={clearError} />}
       <Modal
         show={showMap}
