@@ -4,6 +4,8 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import RatingPlace from "./RatingPlace";
+import CommentList from "./CommentList";
 import "./PlaceItem.css";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 const AllPlaceItem = (props) => {
@@ -32,6 +34,12 @@ const AllPlaceItem = (props) => {
               VIEW DETAIL
             </Button>
           </div>
+          <hr/>
+          <RatingPlace rating={props.rating} valid='false' />
+          <hr/>
+          {/* {props.comment.map((comment, index) => {
+            return <CommentList key={index} comment={comment} />;
+          })} */}
         </Card>
       </li>
     </>

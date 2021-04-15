@@ -50,15 +50,18 @@ const RatingPlace = (props) => {
             halfIcon={<i className="fa fa-star-half-alt"></i>}
             fullIcon={<i className="fa fa-star"></i>}
             activeColor="#ffd700"
-            edit={auth.token ? true : false}
+            edit={auth.token ? (props.valid ? false : true) : false}
           />
           <div className="rating">{rating ? rating.toFixed(2) : null}</div>
         </div>
-        {auth.token && (
-          <Button inverse onClick={ratingHandler}>
-            SUBMIT RATING
-          </Button>
-        )}
+
+        {auth.token ? (
+          props.valid ? null : (
+            <Button inverse onClick={ratingHandler}>
+              SUBMIT RATING
+            </Button>
+          )
+        ) : null}
       </div>
     </>
   );

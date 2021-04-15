@@ -60,7 +60,7 @@ const UserProfile = () => {
             },
             true
           );
-        } catch (err) {}
+        }catch (err) {}
       };
       getUserByUserId();
     }
@@ -72,7 +72,9 @@ const UserProfile = () => {
       const formData = new FormData();
       formData.append("id", formState.inputs.id.value);
       formData.append("name", formState.inputs.name.value);
-      formData.append("image", formState.inputs.image.value);
+   
+        formData.append("image", formState.inputs.image.value);
+      
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${auth.userId}`,
         "PATCH",

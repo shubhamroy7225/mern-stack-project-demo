@@ -2,6 +2,7 @@ import React from 'react';
 import Avatar from '../../shared/components/UIElements/Avatar/Avatar';
 import  "./CommentList.css"
 const CommentList = (props) => {
+    console.log(props);
     return (
         <li className='user-items'>
             <div className="user-items__image">

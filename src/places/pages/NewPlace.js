@@ -182,10 +182,11 @@ if(!isLoading){
           <option value="" disabled selected hidden>
             Choose your country
           </option>
-          <option value="grapefruit">India</option>
-          <option value="lime">USA</option>
-          <option value="coconut">UK</option>
-          <option value="mango">Aus</option>
+          <option value="india">India</option>
+          <option value="usa">USA</option>
+          <option value="uk">UK</option>
+          <option value="aus">Aus</option>
+          <option value="france">France</option>
         </Input>
         <Button type="submit" disabled={!formState.isValid}>
           ADD PLACE

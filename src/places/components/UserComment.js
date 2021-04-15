@@ -8,7 +8,6 @@ import { useParams } from "react-router";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 const UserComment = (props) => {
-  console.log(props);
   const auth = useContext(AuthContext);
   const placeId = useParams().placeId;
   const id = useParams().userId;
@@ -29,26 +28,41 @@ const UserComment = (props) => {
   };
 
   useEffect(() => {
-    if (id || props.createId) {
-      const getAllPlacesByUserId = async () => {
-        try {
-          const response = await sendRequest(
-            `${process.env.REACT_APP_BACKEND_URL}/places/user/${
-              id ? id : props.createId
-            }`,
-            "GET"
-          );
-          response.map((place) => {
-            return setComments(place.comments);
-          });
-        } catch (err) {}
-      };
-      getAllPlacesByUserId();
-    } else {
-      setComments(props.comment);
-    }
+    const getPlaceByPlaceId = async () => {
+      try {
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`,
+          "GET"
+        );
+        console.log(response);
+        setComments(response.comments);
+      } catch (err) {}
+    };
+    getPlaceByPlaceId();
     setUpdate(false);
-  }, [sendRequest, id, update,props.createId]);
+  }, [sendRequest, update, placeId]);
+
+  // useEffect(() => {
+  //   if ( props.createId) {
+  //     const getAllPlacesByUserId = async () => {
+  //       try {
+  //         const response = await sendRequest(
+  //           `${process.env.REACT_APP_BACKEND_URL}/places/user/${
+  //             props.createId
+  //           }`,
+  //           "GET"
+  //         );
+  //         response.map((place) => {
+  //           return setComments(place.comments);
+  //         });
+  //       } catch (err) {}
+  //     };
+  //     getAllPlacesByUserId();
+  //   } else {
+  //     setComments(props.comment);
+  //   }
+  //   setUpdate(false);
+  // }, [sendRequest, id, update,props.createId]);
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();

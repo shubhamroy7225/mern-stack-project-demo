@@ -120,7 +120,7 @@ const PlaceDetails = (props) => {
             </div>
             <div className="place-item__info">
               <h2>{placeData.title}</h2>
-              <h3>{placeData.address}</h3>
+              <h3>{placeData.yourexprience}</h3>
               <p>{placeData.description}</p>
             </div>
             <div className="place-item__actions">

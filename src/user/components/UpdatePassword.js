@@ -15,23 +15,12 @@ const UpdatePassword = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [passwordData,setPasswordData] = useState()
-  // const [formState, inputHandler, setFormData] = useForm(
-  //   {
-  //     password: {
-  //       value: "",
-  //       isValid: false,
-  //     }
-  //   },
-  //   false
-  // );
-
   const updatePassword = (event)=>{
     setPasswordData(event.target.value)
 }
   const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${auth.userId}/password`,
         "PATCH",
