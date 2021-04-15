@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 
 import Button from "../Button/Button";
-import BorderColorIcon from '@material-ui/icons/BorderColor';
+
 import "./ImageUpload.css";
 
 const UserUpdateProfile = props => {

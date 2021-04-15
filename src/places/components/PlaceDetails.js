@@ -9,11 +9,12 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import "./PlaceDetails.css";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import RatingPlace from "./RatingPlace";
 import UserComment from "./UserComment";
 const PlaceDetails = (props) => {
   console.log(props)
+  const history = useHistory()
   const placeId = useParams().placeId;
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
@@ -21,7 +22,6 @@ const PlaceDetails = (props) => {
   const [placeData, setPlaceData] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const id = useParams().userId;
-  console.log(id);
   useEffect(() => {
     const getPlaceByPlaceId = async () => {
       try {
@@ -57,14 +57,15 @@ const PlaceDetails = (props) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/places/${placeData.placeId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`,
         "DELETE",
         null,
         {
           Authorization: auth.token,
         }
       );
-      placeData.onDelete(placeData.placeId);
+      //placeData.onDelete(placeData.placeId);
+        history.push('/')
     } catch (err) {}
   };
 
@@ -111,11 +112,11 @@ const PlaceDetails = (props) => {
             cannot be undone thereafter.
           </p>
         </Modal>
-        <li className="place-item">
+       <center> <li className="place-item">
+       {isLoading && <LoadingSpinner asOverlay />}
           <Card>
             <ImageGallery items={newArray} />
             <div className="place-item__image">
-              {isLoading && <LoadingSpinner asOverlay />}
             </div>
             <div className="place-item__info">
               <h2>{placeData.title}</h2>
@@ -127,7 +128,7 @@ const PlaceDetails = (props) => {
                 VIEW ON MAP
               </Button>
               {auth.userId === placeData.creator && (
-                <Button to={`/place/${placeData.placeId}`}>EDIT</Button>
+                <Button to={`/place/${placeId}`}>EDIT</Button>
               )}
 
               {auth.userId === placeData.creator && (
@@ -143,12 +144,11 @@ const PlaceDetails = (props) => {
             {auth.token && <hr />}
             <UserComment comment={placeData.comments} createId={placeData.creator}/>
           </Card>
-        </li>
-        )
+        </li></center>
       </>
     );
   } else {
-    return null;
+    return <LoadingSpinner asOverlay />;
   }
 };
 export default PlaceDetails;

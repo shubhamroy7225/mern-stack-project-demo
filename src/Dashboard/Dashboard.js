@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import Button from "../shared/components/FormElements/Button/Button";
 import Card from "../shared/components/UIElements/Card/Card";
 import { Container, Row, Col } from "react-grid-system";
 import "./Dashboard.css";
 import { AuthContext } from "../shared/components/context/auth-context";
+import { useHttpClient } from "../shared/components/hooks/http-hook";
+import ErrorModal from "../shared/components/UIElements/ErrorModal/ErrorModal";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 const Dashboard = () => {
     const auth = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
 let dashboard = [
   {
     name: "Add Place",
@@ -28,15 +31,12 @@ let dashboard = [
     name: "Logout",
   },
 ];
+if(!isLoading){
   return (
     <>
+    {error && <ErrorModal error={error} onClear={clearError} />}
+    
       <h1>Dashboard</h1>
-      {/* <div className="user-item__image">
-        <Avatar
-          image={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
-          alt={props.user}
-        />
-      </div> */}
       <Container>
         <Row>
           {dashboard.map((item) => {
@@ -65,6 +65,8 @@ let dashboard = [
         </Row>
       </Container>
     </>
-  );
+  )}else{
+    return <LoadingSpinner asOverlay />
+  }
 };
 export default Dashboard;

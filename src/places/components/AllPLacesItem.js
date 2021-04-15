@@ -20,13 +20,13 @@ const AllPlaceItem = (props) => {
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
-      <li className="place-item">
+      <li className="places-item">
         <Card>
-          <img src={imgUrl} alt="" className="place-item-image" />
-          <div className="place-item__image">
+          <img src={imgUrl} alt="" className="places-item-image" />
+          <div className="places-item__image">
             {isLoading && <LoadingSpinner asOverlay />}
           </div>
-          <div className="place-item__info">
+          <div className="places-item__info">
             <h2>{props.title}</h2>
             <Button inverse to={`/places/details/${props.id}`}>
               VIEW DETAIL

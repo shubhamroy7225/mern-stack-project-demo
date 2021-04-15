@@ -1,14 +1,14 @@
  @import "~react-image-gallery/styles/css/image-gallery.css";
 
-.place-item {
+.places-item {
   margin: 1rem 0;
   list-style: none;
  
 }
-.place-item__info {
+.places-item__info {
   text-align: center;
 }
-.place-item-image{
+.places-item-image{
   height: 15rem;
 }
 

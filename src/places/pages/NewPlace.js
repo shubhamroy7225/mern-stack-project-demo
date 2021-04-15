@@ -77,7 +77,7 @@ const NewPlace = () => {
       formData.append("city", formState.inputs.city.value);
       formData.append("state", formState.inputs.state.value);
       formData.append("country", formState.inputs.country.value);
-      await sendRequest(
+     await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
         formData,
@@ -88,13 +88,12 @@ const NewPlace = () => {
       history.push("/");
     } catch (err) {}
   };
-
+if(!isLoading){
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
       <form className="place-form" onSubmit={placeSubmitHandler}>
-        {isLoading && <LoadingSpinner asOverlay />}
-
+      {isLoading && <LoadingSpinner asOverlay/>}
         <Input
           id="category"
           element="select"
@@ -193,6 +192,8 @@ const NewPlace = () => {
         </Button>
       </form>
     </>
-  );
+  )}else{
+    return <LoadingSpinner asOverlay />
+  }
 };
 export default NewPlace;

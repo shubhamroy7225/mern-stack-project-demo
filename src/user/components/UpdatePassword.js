@@ -14,28 +14,35 @@ const UpdatePassword = () => {
   const history = useHistory();
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [formState, inputHandler, setFormData] = useForm(
-    {
-      password: {
-        value: "",
-        isValid: false,
-      }
-    },
-    false
-  );
+  const [passwordData,setPasswordData] = useState()
+  // const [formState, inputHandler, setFormData] = useForm(
+  //   {
+  //     password: {
+  //       value: "",
+  //       isValid: false,
+  //     }
+  //   },
+  //   false
+  // );
 
-
+  const updatePassword = (event)=>{
+    setPasswordData(event.target.value)
+}
   const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
-
     try {
-      const formData = new FormData();
-      formData.append("password", formState.inputs.password.value);
-      console.log(formData)
+      
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${auth.userId}/password`,
         "PATCH",
-        formData
+        JSON.stringify({
+          id:auth.userId,
+          password: passwordData,
+        }),
+        {
+          "Content-Type": "application/json",
+           Authorization:auth.token
+        }
       );
       history.push("/users");
     } catch (err) {}
@@ -59,8 +66,9 @@ const UpdatePassword = () => {
           className="place-form"
           onSubmit={placeUpdateSubmitHandler}
         >
+          <input type="text" id="password" name="password" onChange={updatePassword}></input>
           
-          <Input
+          {/* <Input
             element="input"
             id="password"
             type="text"
@@ -68,8 +76,8 @@ const UpdatePassword = () => {
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 5 characters."
             onInput={inputHandler}
-          />
-         <Button type="submit" disabled={!formState.isValid}>
+          /> */}
+         <Button type="submit" >
             UPDATE PASSWORD
           </Button>
         </form>
