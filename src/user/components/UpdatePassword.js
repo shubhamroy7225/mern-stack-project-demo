@@ -60,28 +60,23 @@ const UpdatePassword = () => {
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
+      <center> <div className="place-item">
       <Card>
         <form
           action=""
           className="place-form"
           onSubmit={placeUpdateSubmitHandler}
         >
+          <label for="password">Update Password</label><br/>
           <input type="text" id="password" name="password" onChange={updatePassword}></input>
-          
-          {/* <Input
-            element="input"
-            id="password"
-            type="text"
-            label="Change Password"
-            validators={[VALIDATOR_MINLENGTH(6)]}
-            errorText="Please enter a valid password, at least 5 characters."
-            onInput={inputHandler}
-          /> */}
+          <br/><br/>
          <Button type="submit" >
             UPDATE PASSWORD
           </Button>
         </form>
       </Card>
+      </div>
+      </center>
     </>
   );
 };

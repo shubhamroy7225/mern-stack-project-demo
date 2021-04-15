@@ -102,6 +102,7 @@ const UserProfile = () => {
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
+      <center> <div className="place-item">
       <Card>
         <form
           action=""
@@ -130,6 +131,8 @@ const UserProfile = () => {
           </Button>
         </form>
       </Card>
+      </div>
+      </center>
     </>
   );
 };

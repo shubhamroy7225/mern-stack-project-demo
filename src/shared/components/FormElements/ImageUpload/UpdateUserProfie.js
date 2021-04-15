@@ -56,8 +56,8 @@ console.log(previewUrl)
         <div className="image-upload__preview">
           <img src={previewUrl?previewUrl:props.imageUrl} alt="Preview" />
         </div>
-        <Button type="button" onClick={pickImageHandler}>
-         UPDATE IMAGE
+        <Button inverse type="button" onClick={pickImageHandler}>
+         PICK IMAGE
         </Button>
       </div> 
     </div>
