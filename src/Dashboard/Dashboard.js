@@ -35,8 +35,6 @@ if(!isLoading){
   return (
     <>
     {error && <ErrorModal error={error} onClear={clearError} />}
-    
-      <h1>Dashboard</h1>
       <Container>
         <Row>
           {dashboard.map((item) => {

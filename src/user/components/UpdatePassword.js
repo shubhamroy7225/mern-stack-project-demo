@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import { useHistory, useParams } from "react-router";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import Button from "../../shared/components/FormElements/Button/Button";
@@ -33,6 +35,19 @@ const UpdatePassword = () => {
            Authorization:auth.token
         }
       );
+      store.addNotification({
+        title: "Wonderful!",
+        message: "Password Updated Successfully",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
       history.push("/users");
     } catch (err) {}
   };

@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import Card from "../../shared/components/UIElements/Card/Card";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
@@ -77,6 +79,21 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
+
+        store.addNotification({
+          title: "Wonderful!",
+          message: "Successfully Login",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            onScreen: true
+          }
+        });
+        
         auth.login(response.userId,response.token);
       } catch (err) {}  
     } else {
@@ -92,6 +109,19 @@ const Auth = () => {
          formData
         );
         console.log(response)
+        store.addNotification({
+          title: "Wonderful!",
+          message: "Successfully SignUp",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            onScreen: true
+          }
+        });
         auth.login(response.userId,response.token);
       } catch (err) {}
     }

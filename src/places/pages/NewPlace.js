@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
 import {
@@ -85,6 +87,19 @@ const NewPlace = () => {
           Authorization: auth.token,
         }
       );
+      store.addNotification({
+        title: "Wonderful!",
+        message: "Place Added Successfully",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
       history.push("/");
     } catch (err) {}
   };

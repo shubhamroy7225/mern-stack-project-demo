@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import Button from "../../shared/components/FormElements/Button/Button";
 import Input from "../../shared/components/FormElements/Input";
 import "../../places/pages/FormPlace.css";
@@ -74,6 +76,19 @@ const UpdatePlace = (props) => {
            Authorization:auth.token
         }
       );
+      store.addNotification({
+        title: "Wonderful!",
+        message: "Data Updated Successfully",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
       history.push("/" + auth.userId + "/places");
     } catch (err) {}
   };

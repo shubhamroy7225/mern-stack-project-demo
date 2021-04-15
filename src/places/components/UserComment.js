@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import Card from "../../shared/components/UIElements/Card/Card";
@@ -76,6 +78,19 @@ const UserComment = (props) => {
           Authorization: auth.token,
         }
       );
+      store.addNotification({
+        title: "Wonderful!",
+        message: "Your Comment Added Successfully",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
       setUpdate(true);
     } catch (err) {}
   };

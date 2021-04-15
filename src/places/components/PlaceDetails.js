@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import ImageGallery from "react-image-gallery";
 import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
@@ -56,7 +58,7 @@ const PlaceDetails = (props) => {
   const confirmDeleteWarningHandler = async () => {
     setShowConfirmModal(false);
     try {
-      await sendRequest(
+      const response= await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`,
         "DELETE",
         null,
@@ -64,9 +66,22 @@ const PlaceDetails = (props) => {
           Authorization: auth.token,
         }
       );
-      //placeData.onDelete(placeData.placeId);
-        history.push('/')
+      console.log(response);
+      store.addNotification({
+        title: "Delete!",
+        message: "Data Deleted Successfully",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
     } catch (err) {}
+    history.push('/')
   };
 
   const openMapHandler = () => {

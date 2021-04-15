@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { store } from 'react-notifications-component';
+import 'animate.css/animate.min.css';
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import ReactStars from "react-rating-stars-component";
@@ -30,6 +32,19 @@ const RatingPlace = (props) => {
           Authorization: auth.token,
         }
       );
+      store.addNotification({
+        title: "Wonderful!",
+        message: "Your Rating Submitted Successfully",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
     } catch (err) {
       console.log(err.message);
     }

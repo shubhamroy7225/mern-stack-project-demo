@@ -5,6 +5,8 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 import Dashboard from "./Dashboard/Dashboard";
 import AllPlaceItem from "./places/components/AllPLacesItem";
 import PlaceDetails from "./places/components/PlaceDetails";
@@ -67,6 +69,7 @@ function App() {
       <Router>
         <Suspense fallback={<div className="center"><LoadingSpinner /></div>}>
           <MainNavigation />
+          <ReactNotification />
           <main>{routes}</main>
         </Suspense>
       </Router>
