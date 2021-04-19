@@ -57,7 +57,6 @@ console.log(previewUrl)
           PICK IMAGE
         </Button>
       </div>
-      {!isValid && <p>{props.errorText}</p>}
     </div>
   );
 };

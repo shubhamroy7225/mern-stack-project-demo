@@ -15,8 +15,9 @@ import { useHistory } from "react-router";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import MultipleImageUpload from "../../shared/components/FormElements/ImageUpload/MultipleImagesUpload";
+import Backdrop from "../../shared/Backdrop/Backdrop"
 
-const NewPlace = () => {
+const NewPlace = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [selectedFile, setSelectedFile] = useState();
   const auth = useContext(AuthContext);
@@ -107,7 +108,9 @@ if(!isLoading){
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
+      
       <form className="place-form" onSubmit={placeSubmitHandler}>
+      <Backdrop/>
       {isLoading && <LoadingSpinner asOverlay/>}
         <Input
           id="category"

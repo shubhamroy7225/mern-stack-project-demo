@@ -11,6 +11,7 @@ import {
 } from "../../shared/components/util/validators";
 import { useForm } from "../../shared/components/hooks/form-hook";
 import "./Auth.css";
+
 import { AuthContext } from "../../shared/components/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
@@ -129,23 +130,23 @@ const Auth = () => {
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
+
+      <center><div className="header-container">
+
+      <div className="login-header">
+        <h1>{isLoginMode ? "LOGIN":"SIGNUP" }</h1>
+      </div>
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2
-          style={{
-            color: "#ff0055",
-          }}
-        >
-          {isLoginMode ? "LOGIN" : "SIGNUP"} REQUIRED
-        </h2>
-        <hr />
         <form onSubmit={authSubmitHandler}>
+      
           {!isLoginMode && (
             <Input
               element="input"
               id="name"
               type="text"
               label="Your Name"
+              placeholder="Please Enter Your Name"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a name."
               onInput={inputHandler}
@@ -156,7 +157,8 @@ const Auth = () => {
             element="input"
             id="email"
             type="email"
-            label="E-Mail"
+            label="Email"
+            placeholder="Please Enter Your Email"
             validators={[VALIDATOR_EMAIL()]}
             errorText="Please enter a valid email address."
             onInput={inputHandler}
@@ -166,6 +168,7 @@ const Auth = () => {
             id="password"
             type="password"
             label="Password"
+            placeholder="Please Enter Your Password"
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 5 characters."
             onInput={inputHandler}
@@ -178,6 +181,7 @@ const Auth = () => {
           SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
         </Button>
       </Card>
+      </div></center>
     </>
   );
 };

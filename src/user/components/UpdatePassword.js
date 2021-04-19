@@ -12,6 +12,8 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/components/util/validators";
+import Backdrop from "../../shared/Backdrop/Backdrop";
+import "./UpdatePassword.css"
 const UpdatePassword = () => {
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -63,9 +65,11 @@ const UpdatePassword = () => {
   
   return (
     <>
-      {error && <ErrorModal error={error} onClear={clearError} />}
-      <center> <div className="place-item">
-      <Card>
+      {error && <ErrorModal error={error} onClear={clearError} />}      
+      
+      <div className="place-item">
+      <Backdrop/>
+      <center>
         <form
           action=""
           className="place-form"
@@ -78,9 +82,10 @@ const UpdatePassword = () => {
             UPDATE PASSWORD
           </Button>
         </form>
-      </Card>
-      </div>
-      </center>
+        </center>
+        </div>
+        
+     
     </>
   );
 };

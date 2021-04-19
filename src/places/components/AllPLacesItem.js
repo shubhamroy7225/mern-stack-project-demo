@@ -30,12 +30,13 @@ const AllPlaceItem = (props) => {
           </div>
           <div className="places-item__info">
             <h2>{props.title}</h2>
+            <p>{props.yourexprience}</p>
             <Button inverse to={`/places/details/${props.id}`}>
               VIEW DETAIL
             </Button>
           </div>
           <hr/>
-          <RatingPlace rating={props.rating} valid='false' />
+          <RatingPlace rating={props.rating} reviews={props.total_users_rated} valid='false' />
           <hr/>
           {/* {props.comment.map((comment, index) => {
             return <CommentList key={index} comment={comment} />;

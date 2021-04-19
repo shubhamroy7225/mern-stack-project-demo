@@ -12,6 +12,7 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import { VALIDATOR_REQUIRE } from "../../shared/components/util/validators";
+import Backdrop from "../../shared/Backdrop/Backdrop";
 const UserProfile = () => {
   const history = useHistory();
   const [user, setUser] = useState();
@@ -119,11 +120,12 @@ const UserProfile = () => {
   return (
     <>
       {error && <ErrorModal error={error} onClear={clearError} />}
-      <center> <div className="place-item">
-      <Card>
+      <div className="place-item">
+        <Backdrop/>
+      <center> 
         <form
           action=""
-          className="place-form"
+          
           onSubmit={placeUpdateSubmitHandler}
         >
           <UserUpdateProfile
@@ -147,9 +149,9 @@ const UserProfile = () => {
             UPDATE PROFILE
           </Button>
         </form>
-      </Card>
+        </center>
       </div>
-      </center>
+    
     </>
   );
 };

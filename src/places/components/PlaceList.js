@@ -33,6 +33,7 @@ const PlaceList = (props) => {
             coordinates={place.location}
             onDelete={props.onDeletePlace}
             rating={place.total_rating}
+            total_users_rated={place.total_users_rated}
             comment={place.comments}
           />
           </Col>

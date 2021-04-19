@@ -40,7 +40,7 @@ function App() {
         <Route path="/places/details/:placeId" component={PlaceDetails} exact />
         <Route path="/user/:userId/profile" component={UserProfile} exact />
         <Route path="/user/:userId/password" component={UpdatePassword} exact />
-        <Redirect to="/places" />
+        <Redirect to="/" />
       </Switch>
     );
   } else {

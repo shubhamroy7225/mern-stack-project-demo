@@ -31,6 +31,7 @@ const AllPlaceList = (props) => {
             createId={place.creator}
             coordinates={place.location}
             rating={place.total_rating}
+            total_users_rated={place.total_users_rated}
             comment={place.comments}
             yourexprience={place.yourexprience}
             city={place.city}

@@ -26,7 +26,7 @@
   
   .user-item__image {
     width: 4rem;
-    height: 4rem;
+    height: 2rem;
     margin-right: 1rem;
   }
   
@@ -46,4 +46,13 @@
   
   .user-item__info{
     margin: 1rem;
+  }
+  .container-card{
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-user-profie{
+    width: 7.5rem;
+    display: flex;
+    justify-content: space-between;
   }

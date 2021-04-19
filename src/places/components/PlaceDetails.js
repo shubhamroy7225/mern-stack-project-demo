@@ -127,9 +127,8 @@ const PlaceDetails = (props) => {
             cannot be undone thereafter.
           </p>
         </Modal>
-       <center> <li className="place-item">
+      <li className="place-item">
        {isLoading && <LoadingSpinner asOverlay />}
-          <Card>
             <ImageGallery items={newArray} />
             <div className="place-item__image">
             </div>
@@ -154,12 +153,12 @@ const PlaceDetails = (props) => {
             </div>
             {auth.token && <hr />}
             <RatingPlace
-              rating={placeData.total_rating}
+              rating={placeData.total_rating }
+              reviews={placeData.total_users_rated}
             />
             {auth.token && <hr />}
             <UserComment comment={placeData.comments} createId={placeData.creator}/>
-          </Card>
-        </li></center>
+        </li>
       </>
     );
   } else {

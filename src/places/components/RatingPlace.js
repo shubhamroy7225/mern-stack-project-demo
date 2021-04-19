@@ -14,6 +14,7 @@ const RatingPlace = (props) => {
   const placeId = useParams().placeId;
   const auth = useContext(AuthContext);
   const [rating, setRating] = useState(props.rating);
+  const [reviews, setReviews] = useState(props.reviews);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const ratingChanged = (newRating) => {
     setRating(newRating);
@@ -67,16 +68,17 @@ const RatingPlace = (props) => {
             activeColor="#ffd700"
             edit={auth.token ? (props.valid ? false : true) : false}
           />
-          <div className="rating">{rating ? rating.toFixed(2) : null}</div>
-        </div>
-
-        {auth.token ? (
+           <div className="rating">{reviews ? reviews: null} {reviews <= 1?'Review':'Reviews'}</div>
+           {auth.token ? (
           props.valid ? null : (
             <Button inverse onClick={ratingHandler}>
               SUBMIT RATING
             </Button>
           )
         ) : null}
+        </div>
+
+       
       </div>
     </>
   );

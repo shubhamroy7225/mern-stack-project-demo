@@ -13,6 +13,10 @@
     margin-bottom: 1rem;
   }
   
+  .form-control input{
+    border-radius: 2rem;
+    height: 3rem;
+  }
   .form-control input,
   .form-control textarea {
     width: 100%;
